@@ -19,14 +19,18 @@
 + Alt+Enter 오류해결
 + Ctrl+Alt+V 객체 자동생성
   
-  + 예시 
+  + 예시
+    
 ```
 new Member(memberId,"memberA", Grade.VIP)
 ```
+
 를 누르고 이 단축키를 누르면
+
 ```
 Member member=new Member(memberId,"memberA", Grade.VIP);
 ```
+
 이렇게 객체를 자동으로 생성해준다.
 
 static import
@@ -38,9 +42,12 @@ static import
 하지만 잘못 사용하는경우에는 가독성을 더 떨어트릴수 있으므로 주의하자.
 
 + static import를 잘 사용한 예시
-  ```
+  
+```
 Assertions.assertThat(order.getDiscountPrice()).isEqualTo(1000);
-  ```
+```
+
+static import를 사용하여 코드의 가독성을 높인것을 볼 수있다.
 
 ```
 import static org.assertj.core.api.Assertions.*;
@@ -48,6 +55,7 @@ assertThat(discount).isEqualTo(1000);
 ```
 
 + static import 를 잘못 사용한 예시
+  
 ```
 import static java.lang.System.out;
 out.print(myDoc);   
