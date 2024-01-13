@@ -63,6 +63,9 @@ out.print(myDoc);
 
 + Ctrl+e 과거 코드를 고쳤던 히스토리가 나온다.
 
+  ![image](https://github.com/bakjinsoo/Java_Practice_Order/assets/77185565/bc8d08a1-b168-4cd7-b385-edb94826e89f)
+
+
 ### 자바 개념
 
 + 다형성
