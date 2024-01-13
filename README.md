@@ -90,3 +90,16 @@ __프로그래머는 "추상화에 의존해야지, 구체화에 의존하면 �
 
 __소프트웨어 요소는 확장에는 열려 있으나 변경에는 닫혀 있어야한다.__
 
+
+```
+public class OrderServiceImpl implements OrderService{
+    private final MemberRepository memberRepository=new MemberServiceImpl();
+    private final DiscountPolicy discountPolicy=new FixDiscountPolicy();
+    
+```
+
+OrderServiceImpl은 DIP를 지키며, DiscountPolicy 추상화 인터페이스에 의존하는거 같았지만 FixDiscountPolicy 추상화 인터페이스에만 의존하도록 코드를 변경한다.
+
+하지만 
+
+
