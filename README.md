@@ -33,7 +33,7 @@ Member member=new Member(memberId,"memberA", Grade.VIP);
 
 이렇게 객체를 자동으로 생성해준다.
 
-static import
++ static import
 
 메소드 및 변수를 패키지, 클래스명 없이 접근가능하게 해준다.
 
@@ -60,3 +60,15 @@ assertThat(discount).isEqualTo(1000);
 import static java.lang.System.out;
 out.print(myDoc);   
 ```
+
++ Ctrl+e 과거 코드를 고쳤던 히스토리가 나온다.
+
+### 자바 개념
+
++ 다형성
+  + 역할, 구현으로 구분 -> 단순하고 유연하게 변경이 가능하다.
+
++ 역할 - > 인터페이스
++ 구현 - > 클래스, 객체
+
++ 인터페이스 -> 안정적으로 잘 설계해야한다.
