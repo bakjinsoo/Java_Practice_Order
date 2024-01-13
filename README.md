@@ -98,8 +98,33 @@ public class OrderServiceImpl implements OrderService{
     
 ```
 
-OrderServiceImpl은 DIP를 지키며, DiscountPolicy 추상화 인터페이스에 의존하는거 같았지만 FixDiscountPolicy 추상화 인터페이스에만 의존하도록 코드를 변경한다.
+OrderServiceImpl은 DIP를 지키며, DiscountPolicy 추상화 인터페이스에 의존하는거 같았지만 FixDiscountPolicy 구체화 구현클래스에도 함께 의존했다.
 
-하지만 
+클라이언트 코드가 DiscountPolicy 추상화 인터페이스에만 의존하도록 코드를 변경했다.
+
+AppConfig가 FixDiscountPolicy 객체 인스턴스를 클라이언트 코드 대신 생성해서 클라이언트 코드에 의존관계를 주입했다.
+
+```
+public class AppConfig {
+    public MemberService memberService() {
+        return new MemberServiceImpl(memberRepository());
+    }
+    private MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+    public OrderService orderService() {//생성한 객체 인스턴스의 참조(레퍼런스)를 생성자를 통해서 주입(연결)해준다.
+        return new OrderServiceImpl(memberRepository(),discountPolicy());
+    }
+    public DiscountPolicy discountPolicy() {
+        return new FixDiscountPolicy();
+    }
+}
+```
+
+애플리케이션을 __사용영역__ 과 __구성영역__ 으로 나눔.
+
+AppConfig가 의존관계를 FixDiscountPolicy-> RateDiscountPolicy로 변경해서 클라이언트 코드에 주입하므로 클라이언트 코드는 변경하지 않아도 됨.
+
+이를 통해 __소프트웨어요소를 새롭게 확장해도 사용영역의 변경은 닫혀있다!__ 라는것을 알 수 있음.
 
 
