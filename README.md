@@ -129,4 +129,108 @@ AppConfig가 의존관계를 FixDiscountPolicy-> RateDiscountPolicy로 변경해
 
 클라이언트 코드를 변경할 필요가 없고 외부에서 코드만 변경하면 된다. __역할과 구현의 세분화의 필요성(객체지향설계의 중요성)__
 
+### IOC
 
+제어의 역전
+
+프레임워크랑 유사.
+
+내 코드를 대신 호출함
+
+제어권이 뒤바뀐다. 제어의 역전
+
+__프레임워크 라이브러리 구분__
+
+프레임워크가 내가 작성한 코드를 제어하고, 대신 실행하면 그것은 프레임워크가 맞다
+
+JUnit
+
+```
+MemberService memberService;
+    OrderService orderService;
+    @BeforeEach
+    public void beforeEach() {
+        AppConfig appConfig=new AppConfig();
+        memberService=appConfig.memberService();
+        orderService=appConfig.orderService();
+    }
+    @Test
+    void createOrder() {
+        Long memberId=1L;
+        Member member=new Member(memberId,"memberA",Grade.VIP);
+        memberService.join(member);
+
+        Order order=orderService.createOrder(memberId, "itemA", 10000);
+        Assertions.assertThat(order.getDiscountPrice()).isEqualTo(1000);
+    }
+
+```
+다음과 같이 BeforeEach를 먼저 실행하고 Test코드를 실행하는. 제어권이 이미 프레임워크에 넘어가 있는 것은 프레임워크.
+
+내가 작성한 코드가 직접 제어의 흐름을 담당한다면 그것은 프레임워크가 아니라 라이브러리다.
+
+Java객체를 XML 또는 JSON으로 바꾸는
+
+![image](https://github.com/bakjinsoo/Java_Practice_Order/assets/77185565/2fd9f1bd-5c73-4ade-a018-89fcce8eca78)
+
+
+### DI
+__의존관계 주입__
+
+OrderServiceImpl은 DicountPolicy 인터페이스에 의존한다. 실제 어떤 구현객체가 사용될지는 모른다.
+
+의존관계는 정적인 클래스 의존관계와 실행시점에 결정되는 동적인 객체(인스턴스)의존관계 들을 분리해서 생각해야한다.
+
+
+__정적인 클래스 의존관계__
+
+클래스가 사용하는 import코드만 보고 의존관계를 쉽게 판단할 수 있다. 정적인 의존관계는 애플리케이션을 실행하지 않아도 분석할 수 있다. 
+
+__동적인 객체 인스턴스 의존관계__
+
+애플리케이션 실행 시점에 실제 생성된 객체 인스턴스의 참조가 연결된 의존관계다.
+
+```
+public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        super();
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+
+```
+
+이코드만 보면 memberRepository 객체에 어떤 객체가 들어올지 discountPolicy객체에 어떤 할인 정책이 들어올지 코드만 보고서는 알 수 없다. 코드를 실행시켜봐야만 알 수있는데. 이거를 동적인 __객체 인스턴스 의존관계__ 라고 한다.
+
+__객체 다이어그램__
+
+애플리케이션 실행 시점에 외부에서 실제 구현 객체를 생성하고 클라이언트에 전달해서 클라이언트와 서버의 실제 의존관계가 연결되는 것을 __의존관계의 주입__ 이라고 한다.
+
+애플리케이션 실행 시점에 의존관계를 주입함.
+
+```
+ public MemberService memberService() {//생성자 주입
+        return new MemberServiceImpl(memberRepository());
+    }
+    private MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+    public OrderService orderService() {//생성한 객체 인스턴스의 참조(레퍼런스)를 생성자를 통해서 주입(연결)해준다.
+        return new OrderServiceImpl(memberRepository(),discountPolicy());
+    }
+    public DiscountPolicy discountPolicy() {
+        return new FixDiscountPolicy();
+    }
+
+```
+
+__의존관계 주입을 사용하면 정적인 클래스 의존관계를 변경하지 않고 동적인 객체 인스턴스 의존관계를 쉽게 변경할 수 있다.(중요)__
+
+정적인 클래스 다이어그램을 전혀 손대지 않고 -> 애플리케이션 소스코드는 손대지 않는다
+
+__의존관계를 전혀 손대지 않을수 있다.__
+
+### IOC DI, 컨테이너
+
+AppConfig처럼 객체를 생성하고 관리하면서 의존관계를 연결해줌
+
+어셈블러 : 애플리케이션 전체에대한 구성을 조립을한다.
