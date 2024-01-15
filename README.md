@@ -269,3 +269,34 @@ ApplicationContext를 스프링 컨테이너라고 한다.
 이렇게 스프링 컨테이너에 등록된 객체를 __스프링 빈__ 이라 한다.
 
 스프링 컨테이너를 통해 스프링 빈(객체)를 찾아야 함.
+
+### 스프링 컨테이너 생성
+
+![image](https://github.com/bakjinsoo/Java_Practice_Order/assets/77185565/c7a8cc88-962e-4585-9f85-18a6a5123b31)
+
+![image](https://github.com/bakjinsoo/Java_Practice_Order/assets/77185565/259b9955-3614-4f28-a14d-019111447519)
+
+빈 이름은 항상 다른 이름을 사용해야한다.
+
+![image](https://github.com/bakjinsoo/Java_Practice_Order/assets/77185565/7a059e37-e917-4a6d-b905-26a5b3aeb3ea)
+
+스프링 컨테이너는 설정 정보를 참고해서 의존관계를 주입(DI)한다.
+
+단순히 자바코드를 호출하는 것 같지만 차이가 존재.(이 차이는 싱글톤 컨테이너에서 설명)
+
+객체의 참조값들이 연결
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
