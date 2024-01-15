@@ -65,7 +65,7 @@ out.print(myDoc);
 
   ![image](https://github.com/bakjinsoo/Java_Practice_Order/assets/77185565/bc8d08a1-b168-4cd7-b385-edb94826e89f)
 
-
++ iter 탭 : iterator 배열이 있으면 for문 자동완성
 ### 자바 개념
 
 + 다형성
