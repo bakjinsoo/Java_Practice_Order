@@ -234,3 +234,38 @@ __의존관계를 전혀 손대지 않을수 있다.__
 AppConfig처럼 객체를 생성하고 관리하면서 의존관계를 연결해줌
 
 어셈블러 : 애플리케이션 전체에대한 구성을 조립을한다.
+
+### 스프링
+
+```
+@Bean
+    public MemberService memberService() {//생성자 주입
+        return new MemberServiceImpl(memberRepository());
+    }
+```
+
+@Bean을 위에 쓰면 해당 메소드는 스프링 컨테이너라는 곳에 등록이 됨.
+
+```
+@Configuration
+public class AppConfig {
+}
+```
+
+annotation기반으로 Config를 하고 있음.
+
+### 스프링 컨테이너
+
+```
+ApplicationContext applicationContext= new AnnotationConfigApplicationContext(AppConfig.class);
+```
+
+ApplicationContext를 스프링 컨테이너라고 한다.
+
+@Configuration이 붙은 AppConfig를 구성정보로 사용.
+
+@Bean이라 적힌 메서드를 모두 호출해서 반환된 객체를 스프링 컨테이너로 등록
+
+이렇게 스프링 컨테이너에 등록된 객체를 __스프링 빈__ 이라 한다.
+
+스프링 컨테이너를 통해 스프링 빈(객체)를 찾아야 함.
