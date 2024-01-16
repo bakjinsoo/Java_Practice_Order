@@ -354,6 +354,80 @@ ROLE_INFRASTRUCTURE : 스프링이 내부에서 사용하는 빈
 
 나중에 의존관계주입(DI)에서 편하게 의존관계를 보기 위해서
 
+### BeanFactory와 ApplicationContext
+
+![image](https://github.com/bakjinsoo/Java_Practice_Order/assets/77185565/a820343a-3534-4e91-9009-33d278147b1e)
+
+__BeanFactory__
+
+스프링 컨테이너의 최상위 인터페이스
+
+스프링 빈을 관리하고 조회
+
+getBean()을 제공
+
+지금까지 우리가 사용했던 대부분의 기능은 BeanFactory
+
+__ApplicationContext__
+
+BeanFactory기능을 모두 상속받아 제공
+
+빈을 관리하고 검색하는 기능 BeanFactory가 제공.
+
+애플리케이션을 개발할때, 빈은 관리하고 조회하는 기븡은 물론이고, 수많은 부가기능이 필요함.
+
+#### ApplicationContext가 제공하는 부가기능
+
+![image](https://github.com/bakjinsoo/Java_Practice_Order/assets/77185565/6e789687-ec4c-4a45-99e1-b65ca46fb83f)
+
+메시지 소스를 활용한 국제화 기능
+
+예) 한국에서 들어오면 한국어로, 영어권에서 들어오면 영어로 출력
+
+환경변수
+
+로컬, 개발, 운영등을 구분해서 처리
+
+로컬 개발환경 : 내 PC에서 개발한 환경
+
+개발환경 : 테스트 서버에 올려서 여러 시스템을 엮어서 실제 테스트 서버에 띄워두고 테스트 하는 테스트
+
+운영환경 : 실제 프로덕션에 나가는 운영환경
+
+스테이징 환경 : 운영과 가장 비슷한 밀접한 환경을 만들기도 함.
+
+각 환경별로 각각의 데이터베이스에 연결.
+
+애플리케이션 이벤트
+
+이벤트를 발행하고 구독하는 모델을 편리하게 지원
+
+편리한 리소스 조회
+
+파일, 클래스패스, 외부 등에서 리소스를 편리하게 조회.
+
+정리
+
+ApplicationContext는 빈 관리기능 + 편리한 부가기능을 제공한다.
+
+BeanFactory를 직접 사용할 일은 거의 없으며, 부가기능이 포함된 ApplicationContext를 사용.
+
+BeanFactory, ApplicationContext를 스프링 컨테이너라고 함.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
