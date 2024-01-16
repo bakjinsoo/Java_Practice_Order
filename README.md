@@ -414,9 +414,22 @@ BeanFactory를 직접 사용할 일은 거의 없으며, 부가기능이 포함�
 
 BeanFactory, ApplicationContext를 스프링 컨테이너라고 함.
 
+#### XML
+
+최근에는 스프링부트를 많이사용하며, XML기반의 설정은 잘 사용하지 않음
+
+아직 *레거시 프로젝트들이 XML로 되어있고, 컴파일 없이 빈 설정 정보를 변경할 수 있는 장점도 있어서, 한번쯤은 배워두는것도 괜찮음.
+
+*레거시 프로젝트
+
+오래된 기술이나 아키텍처를 사용하여 개발되었거나, 현재의 개발 표준이나 기술적 요구사항을 충족시키지 못하는 소프트웨어 프로젝트를 의미
 
 
+![image](https://github.com/bakjinsoo/Java_Practice_Order/assets/77185565/df296a88-056c-4cca-9076-6d4e07c707e3)
 
+스프링 컨테이너는 BeanDefinition에만 의존을 함.
+
+BeanDefinition자체가 인터페이스
 
 
 
