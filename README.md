@@ -74,6 +74,8 @@ out.print(myDoc);
 + iter 탭 : iterator 배열이 있으면 for문 자동완성
 
 + soutv : System.out.println("변수"+변수); 변수 println
+
++ shift 두번 누르기 : 클래스, 인터페이스 파일 찾기
   
 ### 자바 개념
 
