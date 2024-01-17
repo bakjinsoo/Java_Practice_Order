@@ -12,7 +12,10 @@
 
 ### [싱글톤](#싱글톤디자인-패턴의-필요성)
 
+### [오류해결](#오류해결)
+
 ### intelliJ 단축키
+
 
 ## 테스트 코드는 항상 실패 코드로
 
@@ -683,12 +686,66 @@ public class OrderServiceImpl implements OrderService{
 }
 ```
 
+## 오류해결
 
+### 스프링 빈 중복문제 해결.
 
+```
+java.lang.IllegalStateException: Failed to load ApplicationContext for
+```
 
+```
+Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 
+```
 
+```
+public OrderServiceImpl(@Qualifier("memoryMemberRepository") MemberRepository memberRepository, @Qualifier("rateDiscountPolicy") DiscountPolicy discountPolicy)
+```
 
+### AppConfig.Class
 
+```
+@Configuration
+public class AppConfig {
+    //@Bean memberService -> new MemoryMemberRepsitory()
+    //@Bean orderService -> new MemoryMemberRepositiory()
+    @Bean
+    public MemberService memberService() {//생성자 주입
+        System.out.println("call AppConfig.memberService");
+        return new MemberServiceImpl(memberRepository());
+    }
+    @Bean
+    public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
+        return new MemoryMemberRepository();
+    }
+    @Bean
+    public OrderService orderService() {//생성한 객체 인스턴스의 참조(레퍼런스)를 생성자를 통해서 주입(연결)해준다.
+        System.out.println("call AppConfig.orderService");
+        return new OrderServiceImpl(memberRepository(),discountPolicy());
+    }
+    @Bean
+    public DiscountPolicy discountPolicy() {
+        return new FixDiscountPolicy();
+    }
+    //메소드 명을 보면 역할을 구분 가능
+}
+```
+
+```
+@Autowired
+public OrderServiceImpl(@Qualifier("memoryMemberRepository") MemberRepository memberRepository, @Qualifier("rateDiscountPolicy") DiscountPolicy discountPolicy)
+@Autowired
+public MemberServiceImpl(@Qualifier("memoryMemberRepository") MemberRepository memberRepository)
+```
+
+AppConfig에 있는 스프링 빈 orderServiceImpl, memberServiceImpl과 Autowired로 자동의존관계주입(DI)으로 생성된 스프링 빈 orderServiceImpl, memberServiceImpl이 중복되어서 `Exception encountered during context initialization`오류가 났다.
+
+### 오류해결 
+
++ excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,classes = Configuration.class)로 @Configuration 어노테이션이 있는 class를 ComponentScan에서 제외시키려고 했지만 같은 오류가 났다.
+
+@Qualifer 어노테이션으로 Autowired로 자동의존관계주입으로 생성된 스프링빈의 우선순위를 AppConfig의 스프링빈보다 높였더니, 오류가 해결됐다.
 
 
 
