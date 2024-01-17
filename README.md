@@ -658,11 +658,30 @@ memberRepository() 처럼 의존관계 주입이 필요해서 메서드를 직�
 
 크게 고민할 것이 없다. 스프링 설정 정보는 항상 @Configuration 을 사용하자
 
+### 의존관계 자동주입
 
+#### 생성자 주입
 
++ 생성자 호출시점에 딱 1번만 호출되는 것이 보장된다.
 
++ 불변, 필수 의존관계에 사용
 
+ __중요! 생성자가 딱 1개만 있으면 @Autowired를 생략해도 자동 주입 된다.__ 물론 스프링 빈에만 해당한다.
 
+```
+@Component
+public class OrderServiceImpl implements OrderService{
+    private final MemberRepository memberRepository;
+    //private final DiscountPolicy discountPolicy=new FixDiscountPolicy();
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        super();
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+}
+```
 
 
 
