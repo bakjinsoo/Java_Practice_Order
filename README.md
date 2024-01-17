@@ -12,7 +12,7 @@
 
 ### [싱글톤](#싱글톤디자인-패턴의-필요성)
 
-### [오류해결](#스프링-빈-중복문제-해결.)
+### [오류해결](#스프링-빈-중복문제-해결)
 
 ### intelliJ 단축키
 
@@ -688,7 +688,7 @@ public class OrderServiceImpl implements OrderService{
 
 ### 오류해결
 
-### 스프링 빈 중복문제 해결.
+### 스프링 빈 중복문제 해결
 
 ```
 java.lang.IllegalStateException: Failed to load ApplicationContext for
