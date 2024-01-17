@@ -741,7 +741,7 @@ public MemberServiceImpl(@Qualifier("memoryMemberRepository") MemberRepository m
 
 AppConfig에 있는 스프링 빈 orderServiceImpl, memberServiceImpl과 Autowired로 자동의존관계주입(DI)으로 생성된 스프링 빈 orderServiceImpl, memberServiceImpl이 중복되어서 `Exception encountered during context initialization`오류가 났다.
 
-### 오류해결 
+오류해결 
 
 + excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,classes = Configuration.class)로 @Configuration 어노테이션이 있는 class를 ComponentScan에서 제외시키려고 했지만 같은 오류가 났다.
 
