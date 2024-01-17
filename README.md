@@ -686,7 +686,7 @@ public class OrderServiceImpl implements OrderService{
 }
 ```
 
-## 오류해결
+### 오류해결
 
 ### 스프링 빈 중복문제 해결.
 
