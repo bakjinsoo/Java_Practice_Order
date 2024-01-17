@@ -1,6 +1,21 @@
 # 자바 공부
 
+## 목차
+
+### [단축키](#intelliJ-단축키)
+
+### [자바개념](#자바-개념)
+
+### [객체지향설계 5가지 원칙](#좋은-객체-지향-설계의-5가지-원칙)
+
+### [IOC, DI](#IOC)
+
+### [싱글톤](#싱글톤디자인-패턴의-필요성)
+
+### [오류해결](#스프링-빈-중복문제-해결)
+
 ### intelliJ 단축키
+
 
 ## 테스트 코드는 항상 실패 코드로
 
@@ -435,7 +450,7 @@ BeanDefinition자체가 인터페이스
 
 ## 싱글톤
 
-싱글톤디자인 패턴의 필요성
+### 싱글톤디자인 패턴의 필요성
 
 ```
     @Test
@@ -645,6 +660,98 @@ public MemberRepository memberRepository() {
 memberRepository() 처럼 의존관계 주입이 필요해서 메서드를 직접 호출할 때 싱글톤을 보장하지 않는다.
 
 크게 고민할 것이 없다. 스프링 설정 정보는 항상 @Configuration 을 사용하자
+
+### 의존관계 자동주입
+
+#### 생성자 주입
+
++ 생성자 호출시점에 딱 1번만 호출되는 것이 보장된다.
+
++ 불변, 필수 의존관계에 사용
+
+ __중요! 생성자가 딱 1개만 있으면 @Autowired를 생략해도 자동 주입 된다.__ 물론 스프링 빈에만 해당한다.
+
+```
+@Component
+public class OrderServiceImpl implements OrderService{
+    private final MemberRepository memberRepository;
+    //private final DiscountPolicy discountPolicy=new FixDiscountPolicy();
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        super();
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+}
+```
+
+### 오류해결
+
+### 스프링 빈 중복문제 해결
+
+```
+java.lang.IllegalStateException: Failed to load ApplicationContext for
+```
+
+```
+Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 
+```
+
+```
+public OrderServiceImpl(@Qualifier("memoryMemberRepository") MemberRepository memberRepository, @Qualifier("rateDiscountPolicy") DiscountPolicy discountPolicy)
+```
+
+### AppConfig.Class
+
+```
+@Configuration
+public class AppConfig {
+    //@Bean memberService -> new MemoryMemberRepsitory()
+    //@Bean orderService -> new MemoryMemberRepositiory()
+    @Bean
+    public MemberService memberService() {//생성자 주입
+        System.out.println("call AppConfig.memberService");
+        return new MemberServiceImpl(memberRepository());
+    }
+    @Bean
+    public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
+        return new MemoryMemberRepository();
+    }
+    @Bean
+    public OrderService orderService() {//생성한 객체 인스턴스의 참조(레퍼런스)를 생성자를 통해서 주입(연결)해준다.
+        System.out.println("call AppConfig.orderService");
+        return new OrderServiceImpl(memberRepository(),discountPolicy());
+    }
+    @Bean
+    public DiscountPolicy discountPolicy() {
+        return new FixDiscountPolicy();
+    }
+    //메소드 명을 보면 역할을 구분 가능
+}
+```
+
+```
+@Autowired
+public OrderServiceImpl(@Qualifier("memoryMemberRepository") MemberRepository memberRepository, @Qualifier("rateDiscountPolicy") DiscountPolicy discountPolicy)
+@Autowired
+public MemberServiceImpl(@Qualifier("memoryMemberRepository") MemberRepository memberRepository)
+```
+
+`AppConfig`에 있는 스프링 빈 `orderServiceImpl`, `memberServiceImpl`과 `Autowired`로 자동의존관계주입(DI)으로 생성된 스프링 빈 `orderServiceImpl`, `memberServiceImpl`이 중복되어서 `Exception encountered during context initialization`오류가 났다.
+
+오류해결 
+
++ `excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,classes = Configuration.class)`로 `@Configuration` 어노테이션이 있는 class를 ComponentScan에서 제외시키려고 했지만 같은 오류가 났다.
+
+`@Qualifer` 어노테이션으로 `Autowired`로 자동의존관계주입으로 생성된 스프링빈의 우선순위를 `AppConfig의 스프링빈보다 높였더니`, 오류가 해결됐다.
+
+
+
+
+
+
 
 
 
