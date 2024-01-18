@@ -745,9 +745,11 @@ public MemberServiceImpl(@Qualifier("memoryMemberRepository") MemberRepository m
 
 + `excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,classes = Configuration.class)`로 `@Configuration` 어노테이션이 있는 class를 ComponentScan에서 제외시키려고 했지만 같은 오류가 났다.
 
-`@Qualifer` 어노테이션으로 `Autowired`로 자동의존관계주입으로 생성된 스프링빈의 우선순위를 `AppConfig의 스프링빈보다 높였더니`, 오류가 해결됐다.
+`@Qualifer` 어노테이션으로 `Autowired`로 자동의존관계주입으로 생성된 스프링빈의 우선순위를 `AppConfig`의 스프링빈보다 높였더니, 오류가 해결됐다.
 
+`@RequiredArgsConstructor`어노테이션을 사용해서 `@Qualifer`을 못쓰는 상황이 발생했다.
 
+그래서 우선순위를 `@Primary`어노테이션으로  `Autowired`로 자동의존관계주입으로 생성된 스프링빈의 우선순위를 `AppConfig`의 스프링빈보다 높여, 오류를 해결했다.
 
 
 
