@@ -1,18 +1,20 @@
 package hello.core.member;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-
+@RequiredArgsConstructor
 @Component
+@Primary
 public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
 
-    @Autowired
-    public MemberServiceImpl(@Qualifier("memoryMemberRepository") MemberRepository memberRepository){
-        this.memberRepository = memberRepository;
-    }
+
+//    public MemberServiceImpl( MemberRepository memberRepository){
+//        this.memberRepository = memberRepository;
+//    }
 
     @Override
     public void join(Member member) {
