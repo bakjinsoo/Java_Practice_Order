@@ -25,7 +25,12 @@
 
 + Ctrl+Shift+Enter : 문장 자동완성 단축키. 중괄호 및 세미콜론 자동완성
 
-+ Ctrl+Alt+B 객체가 어디 쓰였는지 보여주는 단축키
++ Ctrl+Alt+B 의존관계인 파일로 가는 단축키
+
++ Ctrl+B 어디에 객체가 쓰였는지 알려주는 단축키
+
+  ![image](https://github.com/bakjinsoo/Java_Practice_Order/assets/77185565/3fbef1b0-9576-419a-80e5-002a11454f60)
+
 
 + 리팩토링이란 외부에서 보는 프로그램 동작은 바꾸지 않고 프로그램 내부개조를 개선하는 것을 의미한다.
 
