@@ -44,6 +44,7 @@
 + Alt+Insert 패키지, 클래스 생성 단축키, 생성자,  Getter Setter 단축키
 + Alt+Enter 오류해결
 + Ctrl+Alt+V 객체 자동생성
++ Ctrl+B 해당 클래스 이동
 
   
   + 예시
